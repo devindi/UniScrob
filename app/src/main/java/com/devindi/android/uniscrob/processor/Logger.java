@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.devindi.android.uniscrob;
+package com.devindi.android.uniscrob.processor;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import com.devindi.android.uniscrob.model.Track;
 
-public class MainActivity extends AppCompatActivity {
+import timber.log.Timber;
+
+public class Logger implements ITrackProcessor {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public void process(Track track) {
+        Timber.d("New track: %s", track);
     }
 }

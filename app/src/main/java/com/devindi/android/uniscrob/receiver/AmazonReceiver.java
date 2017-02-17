@@ -14,16 +14,8 @@
  * limitations under the License.
  */
 
-package com.devindi.android.uniscrob;
+package com.devindi.android.uniscrob.receiver;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+public class AmazonReceiver extends AbsMusicReceiver {
 
-public class MainActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
 }

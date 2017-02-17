@@ -14,16 +14,10 @@
  * limitations under the License.
  */
 
-package com.devindi.android.uniscrob;
+package com.devindi.android.uniscrob.processor;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import com.devindi.android.uniscrob.model.Track;
 
-public class MainActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
+public interface ITrackProcessor {
+    void process(Track track);
 }

@@ -16,14 +16,18 @@
 
 package com.devindi.android.uniscrob;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.app.Application;
 
-public class MainActivity extends AppCompatActivity {
+import timber.log.Timber;
+
+public class UniScrobApp extends Application {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public void onCreate() {
+        super.onCreate();
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
+        Timber.d("************** App started **************");
     }
 }

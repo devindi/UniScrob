@@ -14,16 +14,28 @@
  * limitations under the License.
  */
 
-package com.devindi.android.uniscrob;
+package com.devindi.android.uniscrob.service;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.app.IntentService;
+import android.content.Intent;
 
-public class MainActivity extends AppCompatActivity {
+import com.devindi.android.uniscrob.model.Track;
+import com.devindi.android.uniscrob.processor.Logger;
+
+public class ScrobblerService extends IntentService {
+
+    private Logger logger;
+
+    public ScrobblerService() {
+        super(ScrobblerService.class.getName());
+        logger = new Logger();
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected void onHandleIntent(Intent intent) {
+        Track track = new Track(intent.getExtras());
+
+        logger.process(track);
+
     }
 }
