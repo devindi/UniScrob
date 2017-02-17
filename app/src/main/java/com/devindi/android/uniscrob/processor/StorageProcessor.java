@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-package com.devindi.android.uniscrob;
+package com.devindi.android.uniscrob.processor;
 
-import android.app.Application;
+import com.devindi.android.uniscrob.model.Track;
+import com.devindi.android.uniscrob.storage.TrackStorage;
 
-import io.realm.Realm;
-import timber.log.Timber;
+public class StorageProcessor implements ITrackProcessor {
 
-public class UniScrobApp extends Application {
+    private TrackStorage storage;
+
+    public StorageProcessor() {
+        storage = new TrackStorage();
+    }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        if (BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree());
-        }
-        Timber.d("************** App started **************");
-        Realm.init(this);
+    public void process(Track track) {
+        storage.addTrack(track);
     }
 }

@@ -36,6 +36,18 @@ public class Track {
         this.album = bundle.getString("album", "");
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
     public Bundle toBundle() {
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
@@ -51,6 +63,18 @@ public class Track {
                 ", artist='" + artist + '\'' +
                 ", album='" + album + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Track track = (Track) o;
+
+        if (title != null ? !title.equals(track.title) : track.title != null) return false;
+        if (artist != null ? !artist.equals(track.artist) : track.artist != null) return false;
+        return album != null ? album.equals(track.album) : track.album == null;
     }
 
     public static class Builder {

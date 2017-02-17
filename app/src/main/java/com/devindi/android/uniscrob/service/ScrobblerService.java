@@ -20,22 +20,30 @@ import android.app.IntentService;
 import android.content.Intent;
 
 import com.devindi.android.uniscrob.model.Track;
+import com.devindi.android.uniscrob.processor.StorageProcessor;
+import com.devindi.android.uniscrob.processor.ITrackProcessor;
 import com.devindi.android.uniscrob.processor.Logger;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class ScrobblerService extends IntentService {
 
-    private Logger logger;
+    private Set<ITrackProcessor> processors;
 
     public ScrobblerService() {
         super(ScrobblerService.class.getName());
-        logger = new Logger();
+        processors = new HashSet<>();
+        processors.add(new Logger());
+        processors.add(new StorageProcessor());
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         Track track = new Track(intent.getExtras());
 
-        logger.process(track);
-
+        for (ITrackProcessor processor : processors) {
+            processor.process(track);
+        }
     }
 }
