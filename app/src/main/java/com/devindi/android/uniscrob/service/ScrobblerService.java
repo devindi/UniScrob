@@ -19,12 +19,11 @@ package com.devindi.android.uniscrob.service;
 import android.app.IntentService;
 import android.content.Intent;
 
+import com.devindi.android.uniscrob.UniScrobApp;
+import com.devindi.android.uniscrob.inject.ProcessorComponent;
 import com.devindi.android.uniscrob.model.Track;
-import com.devindi.android.uniscrob.processor.StorageProcessor;
 import com.devindi.android.uniscrob.processor.ITrackProcessor;
-import com.devindi.android.uniscrob.processor.Logger;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class ScrobblerService extends IntentService {
@@ -33,9 +32,8 @@ public class ScrobblerService extends IntentService {
 
     public ScrobblerService() {
         super(ScrobblerService.class.getName());
-        processors = new HashSet<>();
-        processors.add(new Logger());
-        processors.add(new StorageProcessor());
+        ProcessorComponent processorComponent = UniScrobApp.processorComponent(this);
+        processors = processorComponent.processors();
     }
 
     @Override

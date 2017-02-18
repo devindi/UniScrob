@@ -17,11 +17,17 @@
 package com.devindi.android.uniscrob;
 
 import android.app.Application;
+import android.content.Context;
+
+import com.devindi.android.uniscrob.inject.DaggerProcessorComponent;
+import com.devindi.android.uniscrob.inject.ProcessorComponent;
 
 import io.realm.Realm;
 import timber.log.Timber;
 
 public class UniScrobApp extends Application {
+
+    private ProcessorComponent processorComponent;
 
     @Override
     public void onCreate() {
@@ -31,5 +37,10 @@ public class UniScrobApp extends Application {
         }
         Timber.d("************** App started **************");
         Realm.init(this);
+        processorComponent = DaggerProcessorComponent.create();
+    }
+
+    public static ProcessorComponent processorComponent(Context context) {
+        return ((UniScrobApp) context.getApplicationContext()).processorComponent;
     }
 }
