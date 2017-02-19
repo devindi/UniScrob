@@ -32,6 +32,11 @@ public class ScrobblerService extends IntentService {
 
     public ScrobblerService() {
         super(ScrobblerService.class.getName());
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
         ProcessorComponent processorComponent = UniScrobApp.processorComponent(this);
         processors = processorComponent.processors();
     }
