@@ -16,59 +16,22 @@
 
 package com.devindi.android.uniscrob;
 
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.devindi.android.uniscrob.model.Track;
-import com.devindi.android.uniscrob.storage.TrackStorage;
-
-import java.util.List;
-
-import rx.Subscriber;
-import timber.log.Timber;
-
-import static junit.framework.Assert.fail;
+import com.devindi.android.uniscrob.screen.list.ListFragment;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TrackStorage trackStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        trackStorage = new TrackStorage();
-
-        trackStorage.getAll().subscribe(new Subscriber<List<Track>>() {
-            @Override
-            public void onCompleted() {
-                Log.d("Test", "Completed");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Timber.e(e);
-                fail(e.getMessage());
-            }
-
-            @Override
-            public void onNext(List<Track> tracks) {
-                Log.d("Test", "Next");
-                Timber.d("new list: %s", tracks);
-            }
-        });
-
-        Handler handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                trackStorage.addTrack(new Track("T2", "A2", "Al"));
-            }
-        };
-        handler.sendEmptyMessageDelayed(0, 3000);
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction()
+                    .add(R.id.container, new ListFragment())
+                    .commit();
+        }
     }
 }
