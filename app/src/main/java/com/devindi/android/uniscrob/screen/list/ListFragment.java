@@ -49,6 +49,7 @@ public class ListFragment extends BaseFragment implements Observer<List<Track>> 
     public void onStart() {
         super.onStart();
         subscription = storage.getAll().subscribe(this);
+        compositeSubscription.add(subscription);
     }
 
     @Nullable
