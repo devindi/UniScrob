@@ -24,6 +24,9 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import rx.Observable;
+import rx.functions.Action0;
+import rx.functions.Func1;
 import timber.log.Timber;
 
 public class TrackStorage {
@@ -47,18 +50,37 @@ public class TrackStorage {
         realm.close();
     }
 
-    public List<Track> getAll() {
-        Realm realm = Realm.getDefaultInstance();
-        List<Track> tracks = new ArrayList<>();
-        RealmResults<TrackDTO> all = realm.where(TrackDTO.class).findAll();
-        for (TrackDTO dto : all) {
-            tracks.add(new Track.Builder()
-                    .setAlbum(dto.getAlbum())
-                    .setArtist(dto.getArtist())
-                    .setTitle(dto.getTitle())
-                    .createTrack());
-        }
-        realm.close();
-        return tracks;
+    public Observable<List<Track>> getAll() {
+        Timber.d("Realm opened");
+        final Realm realm = Realm.getDefaultInstance();
+        return realm
+                .asObservable()
+                .map(new Func1<Realm, RealmResults<TrackDTO>>() {
+                    @Override
+                    public RealmResults<TrackDTO> call(Realm realm) {
+                        return realm.where(TrackDTO.class).findAll();
+                    }
+                })
+                .map(new Func1<RealmResults<TrackDTO>, List<Track>>() {
+                    @Override
+                    public List<Track> call(RealmResults<TrackDTO> dtos) {
+                        List<Track> list = new ArrayList<>();
+                        for (TrackDTO dto : dtos) {
+                            list.add(new Track.Builder()
+                                    .setAlbum(dto.getAlbum())
+                                    .setArtist(dto.getArtist())
+                                    .setTitle(dto.getTitle())
+                                    .createTrack());
+                        }
+                        return list;
+                    }
+                })
+                .doOnUnsubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        Timber.d("Realm closed");
+                        realm.close();
+                    }
+                });
     }
 }
