@@ -21,6 +21,7 @@ import android.content.Context;
 
 import com.devindi.android.uniscrob.inject.DaggerProcessorComponent;
 import com.devindi.android.uniscrob.inject.ProcessorComponent;
+import com.squareup.leakcanary.LeakCanary;
 
 import io.realm.Realm;
 import timber.log.Timber;
@@ -38,6 +39,10 @@ public class UniScrobApp extends Application {
         Timber.d("************** App started **************");
         Realm.init(this);
         processorComponent = DaggerProcessorComponent.create();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
     }
 
     public static ProcessorComponent processorComponent(Context context) {
