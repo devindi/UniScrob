@@ -18,11 +18,16 @@ package com.devindi.android.uniscrob;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
 
+import com.crashlytics.android.Crashlytics;
 import com.devindi.android.uniscrob.inject.DaggerProcessorComponent;
 import com.devindi.android.uniscrob.inject.ProcessorComponent;
 import com.squareup.leakcanary.LeakCanary;
 
+import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import timber.log.Timber;
 
@@ -43,9 +48,34 @@ public class UniScrobApp extends Application {
             return;
         }
         LeakCanary.install(this);
+        if (shouldInitFabric()) {
+            Fabric.with(this, new Crashlytics());
+            Timber.plant(new FabricTree());
+        }
+    }
+
+    private boolean shouldInitFabric() {
+        try {
+            ApplicationInfo info = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+            Bundle meta = info.metaData;
+            return !meta.getString("io.fabric.ApiKey", "").isEmpty();
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public static ProcessorComponent processorComponent(Context context) {
         return ((UniScrobApp) context.getApplicationContext()).processorComponent;
+    }
+
+    private static class FabricTree extends Timber.Tree {
+
+        @Override
+        protected void log(int priority, String tag, String message, Throwable t) {
+            if (t != null) {
+                Crashlytics.logException(t);
+            }
+        }
     }
 }

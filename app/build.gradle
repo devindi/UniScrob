@@ -1,6 +1,29 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.22.1'
+    }
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def fabricApiKey = properties.getProperty("fabric.api", "")
+
 apply plugin: 'com.android.application'
 apply plugin: 'git-helper'
 apply plugin: 'realm-android'
+if (fabricApiKey.isEmpty()) {
+    println("Crashlitics disabled. Provide API key at local.properties")
+} else {
+    apply plugin: 'io.fabric'
+}
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
 
 android {
     compileSdkVersion 25
@@ -12,6 +35,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [FABRIC_API_KEY: fabricApiKey]
     }
     buildTypes {
         release {
@@ -38,4 +62,7 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
+        transitive = true;
+    }
 }
