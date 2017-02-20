@@ -83,4 +83,10 @@ public class TrackStorage {
                     }
                 });
     }
+
+    public void clear() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.delete(TrackDTO.class);
+        realm.close();
+    }
 }
