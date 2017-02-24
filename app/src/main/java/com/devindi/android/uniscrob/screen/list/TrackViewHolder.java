@@ -20,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.devindi.android.uniscrob.R;
@@ -28,6 +29,10 @@ import com.devindi.android.uniscrob.model.Track;
 public class TrackViewHolder extends RecyclerView.ViewHolder {
 
     private TextView titleView;
+    private ImageView artView;
+    private ImageView statusView;
+    private TextView subTitleView;
+    private TextView scrobbledAtView;
 
     public static TrackViewHolder create(ViewGroup parent) {
         return new TrackViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_track, parent, false));
