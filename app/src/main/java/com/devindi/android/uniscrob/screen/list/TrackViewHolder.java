@@ -26,7 +26,17 @@ import android.widget.TextView;
 import com.devindi.android.uniscrob.R;
 import com.devindi.android.uniscrob.model.Track;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 public class TrackViewHolder extends RecyclerView.ViewHolder {
+
+    private static final String SUB_TITLE_FORMAT = "%s — %s";
+    private static final SimpleDateFormat CREATED_AT_FORMAT;
+
+    static {
+        CREATED_AT_FORMAT = new SimpleDateFormat("dd MMM yy, hh:mm", Locale.US);
+    }
 
     private TextView titleView;
     private ImageView artView;
@@ -42,10 +52,12 @@ public class TrackViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         titleView = (TextView) itemView.findViewById(R.id.title);
         createdAt = (TextView) itemView.findViewById(R.id.date_time);
+        subTitleView = (TextView) itemView.findViewById(R.id.sub_title);
     }
 
     public void bind(Track track) {
         titleView.setText(track.getTitle());
-        createdAt.setText(track.getCreatedAt().toString());
+        createdAt.setText(CREATED_AT_FORMAT.format(track.getCreatedAt()));
+        subTitleView.setText(String.format(SUB_TITLE_FORMAT, track.getArtist(), track.getAlbum()));
     }
 }
