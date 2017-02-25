@@ -23,15 +23,22 @@ import android.os.Bundle;
 
 import com.devindi.android.uniscrob.model.Track;
 import com.devindi.android.uniscrob.service.ScrobblerService;
+import com.devindi.android.uniscrob.tools.BundleUtil;
+
+import java.util.Date;
+
+import timber.log.Timber;
 
 public abstract class AbsMusicReceiver extends BroadcastReceiver {
 
-    public static final String EXTRA_TRACK = "EXTRA_TRACK";
-    public static final String EXTRA_ARTIST = "EXTRA_ARTIST";
-    public static final String EXTRA_ALBUM = "EXTRA_ALBUM";
+    public static final String EXTRA_TRACK = "track";
+    public static final String EXTRA_ARTIST = "artist";
+    public static final String EXTRA_ALBUM = "album";
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Timber.d("Received new track\n %s from %s", BundleUtil.bundleToString(intent.getExtras()), intent.getAction());
+        if (!shouldTrack(intent)) return;
         Track track = parseTrack(intent);
         context.startService(createTrackIntent(context, track));
     }
@@ -48,6 +55,13 @@ public abstract class AbsMusicReceiver extends BroadcastReceiver {
                 .setTitle(rawData.getString(EXTRA_TRACK))
                 .setAlbum(rawData.getString(EXTRA_ALBUM))
                 .setArtist(rawData.getString(EXTRA_ARTIST))
+                .setCreatedAt(new Date())
                 .createTrack();
+    }
+
+    // TODO: 25.02.17 refactor
+    protected boolean shouldTrack(Intent intent) {
+        Boolean isPlaying = BundleUtil.getBoolOrNumberAsBoolExtra(intent.getExtras(), null, "playing", "playstate", "isPlaying", "isplaying", "is_playing");
+        return isPlaying == null ? false : isPlaying;
     }
 }

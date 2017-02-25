@@ -62,7 +62,8 @@ public class Track {
         bundle.putString("title", title);
         bundle.putString("artist", artist);
         bundle.putString("album", album);
-        bundle.putLong("createdAt", createdAt.getTime());
+        long time = createdAt == null ? 0 : createdAt.getTime();
+        bundle.putLong("createdAt", time);
         return bundle;
     }
 

@@ -45,7 +45,7 @@ public class TrackStorage {
                 trackDTO.setAlbum(track.getAlbum());
                 trackDTO.setArtist(track.getArtist());
                 trackDTO.setTitle(track.getTitle());
-                trackDTO.setCreatedAt(new Date());
+                trackDTO.setCreatedAt(track.getCreatedAt());
                 Timber.d("Saved track to DB");
             }
         });

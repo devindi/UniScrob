@@ -16,6 +16,5 @@
 
 package com.devindi.android.uniscrob.receiver;
 
-public class AmazonReceiver extends AbsMusicReceiver {
-
+public class CommonMusicReceiver extends AbsMusicReceiver {
 }
