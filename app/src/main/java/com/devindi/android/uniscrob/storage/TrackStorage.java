@@ -20,6 +20,7 @@ import com.devindi.android.uniscrob.model.Track;
 import com.devindi.android.uniscrob.storage.dto.TrackDTO;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -44,6 +45,7 @@ public class TrackStorage {
                 trackDTO.setAlbum(track.getAlbum());
                 trackDTO.setArtist(track.getArtist());
                 trackDTO.setTitle(track.getTitle());
+                trackDTO.setCreatedAt(new Date());
                 Timber.d("Saved track to DB");
             }
         });
@@ -70,6 +72,7 @@ public class TrackStorage {
                                     .setAlbum(dto.getAlbum())
                                     .setArtist(dto.getArtist())
                                     .setTitle(dto.getTitle())
+                                    .setCreatedAt(dto.getCreatedAt())
                                     .createTrack());
                         }
                         return list;

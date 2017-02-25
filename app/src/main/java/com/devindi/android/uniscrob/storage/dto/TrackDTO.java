@@ -16,12 +16,15 @@
 
 package com.devindi.android.uniscrob.storage.dto;
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 
 public class TrackDTO extends RealmObject {
     private String title;
     private String artist;
     private String album;
+    private Date createdAt;
 
     public TrackDTO() {
     }
@@ -48,5 +51,13 @@ public class TrackDTO extends RealmObject {
 
     public void setAlbum(String album) {
         this.album = album;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

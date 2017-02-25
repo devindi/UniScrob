@@ -32,7 +32,7 @@ public class TrackViewHolder extends RecyclerView.ViewHolder {
     private ImageView artView;
     private ImageView statusView;
     private TextView subTitleView;
-    private TextView scrobbledAtView;
+    private TextView createdAt;
 
     public static TrackViewHolder create(ViewGroup parent) {
         return new TrackViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_track, parent, false));
@@ -41,9 +41,11 @@ public class TrackViewHolder extends RecyclerView.ViewHolder {
     public TrackViewHolder(View itemView) {
         super(itemView);
         titleView = (TextView) itemView.findViewById(R.id.title);
+        createdAt = (TextView) itemView.findViewById(R.id.date_time);
     }
 
     public void bind(Track track) {
         titleView.setText(track.getTitle());
+        createdAt.setText(track.getCreatedAt().toString());
     }
 }

@@ -18,22 +18,27 @@ package com.devindi.android.uniscrob.model;
 
 import android.os.Bundle;
 
+import java.util.Date;
+
 public class Track {
 
     private final String title;
     private final String artist;
     private final String album;
+    private final Date createdAt;
 
-    public Track(String title, String artist, String album) {
+    public Track(String title, String artist, String album, Date createdAt) {
         this.title = title;
         this.artist = artist;
         this.album = album;
+        this.createdAt = createdAt;
     }
 
     public Track(Bundle bundle) {
         this.title = bundle.getString("title", "");
         this.artist = bundle.getString("artist", "");
         this.album = bundle.getString("album", "");
+        this.createdAt = new Date(bundle.getLong("createdAt", 0));
     }
 
     public String getTitle() {
@@ -48,11 +53,16 @@ public class Track {
         return album;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
     public Bundle toBundle() {
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         bundle.putString("artist", artist);
         bundle.putString("album", album);
+        bundle.putLong("createdAt", createdAt.getTime());
         return bundle;
     }
 
@@ -74,6 +84,7 @@ public class Track {
 
         if (title != null ? !title.equals(track.title) : track.title != null) return false;
         if (artist != null ? !artist.equals(track.artist) : track.artist != null) return false;
+        if (createdAt != null ? !createdAt.equals(track.createdAt) : track.createdAt != null) return false;
         return album != null ? album.equals(track.album) : track.album == null;
     }
 
@@ -82,6 +93,12 @@ public class Track {
         private String title;
         private String artist;
         private String album;
+        private Date createdAt;
+
+        public Builder setCreatedAt(Date createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
 
         public Builder setTitle(String title) {
             this.title = title;
@@ -99,7 +116,7 @@ public class Track {
         }
 
         public Track createTrack() {
-            return new Track(title, artist, album);
+            return new Track(title, artist, album, createdAt);
         }
     }
 }
