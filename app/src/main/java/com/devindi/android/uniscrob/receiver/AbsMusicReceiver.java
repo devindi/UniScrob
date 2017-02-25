@@ -31,9 +31,9 @@ import timber.log.Timber;
 
 public abstract class AbsMusicReceiver extends BroadcastReceiver {
 
-    public static final String EXTRA_TRACK = "track";
-    public static final String EXTRA_ARTIST = "artist";
-    public static final String EXTRA_ALBUM = "album";
+    private static final String EXTRA_TRACK = "track";
+    private static final String EXTRA_ARTIST = "artist";
+    private static final String EXTRA_ALBUM = "album";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -49,7 +49,7 @@ public abstract class AbsMusicReceiver extends BroadcastReceiver {
         return intent;
     }
 
-    protected Track parseTrack(Intent intent) {
+    private Track parseTrack(Intent intent) {
         Bundle rawData = intent.getExtras();
         return new Track.Builder()
                 .setTitle(rawData.getString(EXTRA_TRACK))
@@ -60,6 +60,7 @@ public abstract class AbsMusicReceiver extends BroadcastReceiver {
     }
 
     // TODO: 25.02.17 refactor
+    @SuppressWarnings("WeakerAccess")
     protected boolean shouldTrack(Intent intent) {
         Boolean isPlaying = BundleUtil.getBoolOrNumberAsBoolExtra(intent.getExtras(), null, "playing", "playstate", "isPlaying", "isplaying", "is_playing");
         return isPlaying == null ? false : isPlaying;

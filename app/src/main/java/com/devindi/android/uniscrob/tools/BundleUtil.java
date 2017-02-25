@@ -32,6 +32,7 @@ public class BundleUtil {
         return builder.toString();
     }
 
+    @SuppressWarnings("SameParameterValue")
     public static Boolean getBoolOrNumberAsBoolExtra(Bundle bundle, Boolean defaultValue, String... possibleExtraNames) {
         if (possibleExtraNames == null || possibleExtraNames.length == 0) return defaultValue;
 

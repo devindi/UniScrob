@@ -37,9 +37,8 @@ import timber.log.Timber;
 
 public class ListFragment extends BaseFragment implements Observer<List<Track>> {
 
-    private TrackStorage storage;
-    private Subscription subscription;
-    private TrackAdapter adapter;
+    private final TrackStorage storage;
+    private final TrackAdapter adapter;
 
     public ListFragment() {
         storage = new TrackStorage();
@@ -49,7 +48,7 @@ public class ListFragment extends BaseFragment implements Observer<List<Track>> 
     @Override
     public void onStart() {
         super.onStart();
-        subscription = storage.getAll().subscribe(this);
+        Subscription subscription = storage.getAll().subscribe(this);
         compositeSubscription.add(subscription);
     }
 

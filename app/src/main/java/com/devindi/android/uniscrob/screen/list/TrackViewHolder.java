@@ -20,7 +20,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.devindi.android.uniscrob.R;
@@ -38,24 +37,22 @@ public class TrackViewHolder extends RecyclerView.ViewHolder {
         CREATED_AT_FORMAT = new SimpleDateFormat("dd MMM yy, hh:mm", Locale.US);
     }
 
-    private TextView titleView;
-    private ImageView artView;
-    private ImageView statusView;
-    private TextView subTitleView;
-    private TextView createdAt;
+    private final TextView titleView;
+    private final TextView subTitleView;
+    private final TextView createdAt;
 
     public static TrackViewHolder create(ViewGroup parent) {
         return new TrackViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_track, parent, false));
     }
 
-    public TrackViewHolder(View itemView) {
+    private TrackViewHolder(View itemView) {
         super(itemView);
         titleView = (TextView) itemView.findViewById(R.id.title);
         createdAt = (TextView) itemView.findViewById(R.id.date_time);
         subTitleView = (TextView) itemView.findViewById(R.id.sub_title);
     }
 
-    public void bind(Track track) {
+    void bind(Track track) {
         titleView.setText(track.getTitle());
         createdAt.setText(CREATED_AT_FORMAT.format(track.getCreatedAt()));
         subTitleView.setText(String.format(SUB_TITLE_FORMAT, track.getArtist(), track.getAlbum()));

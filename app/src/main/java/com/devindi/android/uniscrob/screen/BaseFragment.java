@@ -37,10 +37,15 @@ public abstract class BaseFragment extends Fragment {
         compositeSubscription.unsubscribe();
     }
 
+    /**
+     *Implementation of {@link rx.Observer#onError(Throwable e)}
+     */
+    @SuppressWarnings("unused")
     public void onError(Throwable e) {
         showError(e.getMessage());
     }
 
+    @SuppressWarnings("WeakerAccess")
     protected void showError(String msg) {
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }

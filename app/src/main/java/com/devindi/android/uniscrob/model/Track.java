@@ -27,7 +27,7 @@ public class Track {
     private final String album;
     private final Date createdAt;
 
-    public Track(String title, String artist, String album, Date createdAt) {
+    private Track(String title, String artist, String album, Date createdAt) {
         this.title = title;
         this.artist = artist;
         this.album = album;
@@ -76,6 +76,7 @@ public class Track {
                 '}';
     }
 
+    @SuppressWarnings("SimplifiableIfStatement")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

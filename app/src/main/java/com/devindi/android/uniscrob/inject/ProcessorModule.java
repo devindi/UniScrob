@@ -25,17 +25,17 @@ import dagger.Provides;
 import dagger.multibindings.IntoSet;
 
 @Module
-public class ProcessorModule {
+class ProcessorModule {
 
     @Provides
     @IntoSet
-    public ITrackProcessor provideLogger() {
+    ITrackProcessor provideLogger() {
         return new Logger();
     }
 
     @Provides
     @IntoSet
-    public ITrackProcessor provideStorage() {
+    ITrackProcessor provideStorage() {
         return new StorageProcessor();
     }
 

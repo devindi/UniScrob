@@ -25,6 +25,7 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+//noinspection GroovyMissingReturnStatement
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"

@@ -21,7 +21,7 @@ import com.devindi.android.uniscrob.storage.TrackStorage;
 
 public class StorageProcessor implements ITrackProcessor {
 
-    private TrackStorage storage;
+    private final TrackStorage storage;
 
     public StorageProcessor() {
         storage = new TrackStorage();

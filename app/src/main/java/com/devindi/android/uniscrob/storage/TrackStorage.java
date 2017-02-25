@@ -20,7 +20,6 @@ import com.devindi.android.uniscrob.model.Track;
 import com.devindi.android.uniscrob.storage.dto.TrackDTO;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -87,6 +86,7 @@ public class TrackStorage {
                 });
     }
 
+    @SuppressWarnings("unused")
     public void clear() {
         Realm realm = Realm.getDefaultInstance();
         realm.delete(TrackDTO.class);

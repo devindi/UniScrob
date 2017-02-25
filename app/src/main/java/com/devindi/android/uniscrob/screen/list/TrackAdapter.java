@@ -24,7 +24,7 @@ import com.devindi.android.uniscrob.model.Track;
 
 import java.util.List;
 
-public class TrackAdapter extends RecyclerView.Adapter<TrackViewHolder> {
+class TrackAdapter extends RecyclerView.Adapter<TrackViewHolder> {
 
     private List<Track> tracks;
 
@@ -43,11 +43,11 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackViewHolder> {
         return tracks == null ? 0 : tracks.size();
     }
 
-    public Track getTrack(int position) {
+    private Track getTrack(int position) {
         return tracks.get(position);
     }
 
-    public void setTracks(List<Track> tracks) {
+    void setTracks(List<Track> tracks) {
         this.tracks = tracks;
         notifyDataSetChanged();
     }
