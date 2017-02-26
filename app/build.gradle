@@ -59,11 +59,13 @@ android {
                 signingConfig signingConfigs.release
                 println 'Using \'release\' signing config for release build'
             } else {
+                signingConfig signingConfigs.debug
                 println 'Using default signing config for release build'
             }
         }
         debug {
             signingConfig signingConfigs.debugg
+            applicationIdSuffix '.debug'
         }
     }
 }
