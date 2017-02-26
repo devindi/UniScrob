@@ -38,10 +38,32 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [FABRIC_API_KEY: fabricApiKey]
     }
+    signingConfigs {
+        //I wouldn't override default debug config
+        debugg {
+            storeFile project.rootProject.file("debug.jks")
+            storePassword '123123'
+            keyAlias 'debug'
+            keyPassword '123123'
+        }
+    }
+    if (project.file('signing.gradle').exists()) {
+        apply from: 'signing.gradle', to: android
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (signingConfigs.properties.get('names').collect().contains('release')) {
+                signingConfig signingConfigs.release
+                println 'Using \'release\' signing config for release build'
+            } else {
+                println 'Using default signing config for release build'
+            }
+        }
+        debug {
+            signingConfig signingConfigs.debugg
         }
     }
 }
